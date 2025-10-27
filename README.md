@@ -43,7 +43,6 @@ graph TD
     Caddy --> A
 
     end
-    classDef edge stroke-width:2px;
 
 Routing: Endpoints are fronted by Caddy and Cloudflare on bigtorig.com.
 
