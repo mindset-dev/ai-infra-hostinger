@@ -16,12 +16,15 @@ This repository is the **meta-layer** for the Hostinger-based AI Systems Lab.
 
 ## 🧩 System Map
 
+## 🧩 System Map
+
 ```mermaid
 graph LR
     %% Hostinger Cloud Overview
     subgraph Hostinger_Cloud["🏠 Hostinger Cloud"]
-        %% Reverse Proxy Layer
-        CF["🌐 Cloudflare DNS"] --> Caddy["⚙️ Caddy Reverse Proxy"]
+        CF["🌐 Cloudflare DNS"]
+        Caddy["⚙️ Caddy Reverse Proxy"]
+        CF --> Caddy
 
         %% Docker Compose Projects
         subgraph Docker_Projects["🐳 Docker Compose Projects (-p)"]
@@ -34,8 +37,11 @@ graph LR
 
         %% Kubernetes KIND Cluster
         subgraph KIND_Cluster["☸️ KIND Cluster (3 nodes)"]
-            CP["🖥️ control-plane"] --> W1["🧱 worker"]
-            CP --> W2["🧱 worker2"]
+            CP["🖥️ control-plane"]
+            W1["🧱 worker"]
+            W2["🧱 worker2"]
+            CP --> W1
+            CP --> W2
         end
 
         %% Routing connections
@@ -45,6 +51,7 @@ graph LR
         Caddy --> O3
         Caddy --> A
     end
+
 
 
 
