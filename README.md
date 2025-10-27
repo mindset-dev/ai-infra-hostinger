@@ -12,22 +12,12 @@ This repository is the **meta-layer** for the Hostinger-based AI Systems Lab.
 > **It does not duplicate the running Docker Compose stacks.**
 
 ## 🧩 System Map
-## 🧩 System Map
-
-## 🧩 System Map
-
-## 🧩 System Map
-
-## 🧩 System Map
-
-
-## 🧩 System Map
 
 ```mermaid
 graph LR
     CF["🌐 Cloudflare DNS"] --> Caddy["⚙️ Caddy Reverse Proxy"]
 
-    subgraph Docker_Compose_Projects ["🐳 Docker Compose Projects"]
+    subgraph Docker_Compose_Projects
         L["🧠 localai"]
         M["🧩 maui"]
         MEM["🧬 mem0"]
@@ -35,7 +25,7 @@ graph LR
         A["🔮 arcane"]
     end
 
-    subgraph KIND_Cluster ["☸️ KIND Cluster"]
+    subgraph KIND_Cluster
         CP["🖥️ control-plane"]
         W1["🧱 worker"]
         W2["🧱 worker2"]
@@ -48,10 +38,6 @@ graph LR
     Caddy --> MEM
     Caddy --> O3
     Caddy --> A
-
-
-
-
 
 
 Routing: Endpoints are fronted by Caddy and Cloudflare on bigtorig.com.
