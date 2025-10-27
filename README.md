@@ -20,39 +20,34 @@ This repository is the **meta-layer** for the Hostinger-based AI Systems Lab.
 
 ## 🧩 System Map
 
+
+## 🧩 System Map
+
 ```mermaid
 graph LR
-    %% Hostinger Cloud Overview
-    subgraph Hostinger["🏠 Hostinger Cloud"]
-        CF["🌐 Cloudflare DNS"]
-        Caddy["⚙️ Caddy Reverse Proxy"]
-        CF --> Caddy
+    CF["🌐 Cloudflare DNS"] --> Caddy["⚙️ Caddy Reverse Proxy"]
 
-        %% Docker Compose Projects
-        subgraph DockerProjects["🐳 Docker Compose Projects (-p)"]
-            L["🧠 localai (23 services): Flowise, n8n, Neo4j, Qdrant, Supabase, Langfuse, Redis, OpenWebUI, MinIO"]
-            M["🧩 maui (3 services)"]
-            MEM["🧬 mem0 (1 service)"]
-            O3["🏥 o3 (OpenMRS + DB + overrides)"]
-            A["🔮 arcane (1 service)"]
-        end
-
-        %% Kubernetes KIND Cluster
-        subgraph KINDCluster["☸️ KIND Cluster (3 nodes)"]
-            CP["🖥️ control-plane"]
-            W1["🧱 worker"]
-            W2["🧱 worker2"]
-            CP --> W1
-            CP --> W2
-        end
-
-        %% Routing connections
-        Caddy --> L
-        Caddy --> M
-        Caddy --> MEM
-        Caddy --> O3
-        Caddy --> A
+    subgraph Docker_Compose_Projects ["🐳 Docker Compose Projects"]
+        L["🧠 localai"]
+        M["🧩 maui"]
+        MEM["🧬 mem0"]
+        O3["🏥 o3 (OpenMRS)"]
+        A["🔮 arcane"]
     end
+
+    subgraph KIND_Cluster ["☸️ KIND Cluster"]
+        CP["🖥️ control-plane"]
+        W1["🧱 worker"]
+        W2["🧱 worker2"]
+        CP --> W1
+        CP --> W2
+    end
+
+    Caddy --> L
+    Caddy --> M
+    Caddy --> MEM
+    Caddy --> O3
+    Caddy --> A
 
 
 
