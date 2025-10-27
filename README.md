@@ -14,35 +14,40 @@ This repository is the **meta-layer** for the Hostinger-based AI Systems Lab.
 ## 🧩 System Map
 ## 🧩 System Map
 
+## 🧩 System Map
+
 ```mermaid
-graph TD
-    subgraph Hostinger["Hostinger Cloud"]
-        subgraph Caddy["Caddy Reverse Proxy"]
-            CF["↔ Cloudflare DNS"]
+graph LR
+    %% Hostinger Cloud Overview
+    subgraph Hostinger_Cloud["🏠 Hostinger Cloud"]
+        %% Reverse Proxy Layer
+        CF["🌐 Cloudflare DNS"] --> Caddy["⚙️ Caddy Reverse Proxy"]
+
+        %% Docker Compose Projects
+        subgraph Docker_Projects["🐳 Docker Compose Projects (-p)"]
+            L["🧠 localai (23 services): Flowise, n8n, Neo4j, Qdrant, Supabase, Langfuse, Redis, OpenWebUI, MinIO"]
+            M["🧩 maui (3 services)"]
+            MEM["🧬 mem0 (1 service)"]
+            O3["🏥 o3 (OpenMRS + DB + overrides)"]
+            A["🔮 arcane (1 service)"]
         end
 
-        subgraph Docker_Compose_Projects["Docker Compose Projects (-p)"]
-            L["localai (23 services): Flowise, n8n, Neo4j, Qdrant, Supabase, Langfuse, Redis, OpenWebUI, MinIO"]
-            M["maui (3 services)"]
-            MEM["mem0 (1 service)"]
-            O3["o3 (OpenMRS + DB + overrides)"]
-            A["arcane (1 service)"]
+        %% Kubernetes KIND Cluster
+        subgraph KIND_Cluster["☸️ KIND Cluster (3 nodes)"]
+            CP["🖥️ control-plane"] --> W1["🧱 worker"]
+            CP --> W2["🧱 worker2"]
         end
 
-        subgraph KIND["KIND Cluster (3 nodes)"]
-            CP["control-plane"] --> W1["worker"]
-            CP --> W2["worker2"]
-        end
+        %% Routing connections
+        Caddy --> L
+        Caddy --> M
+        Caddy --> MEM
+        Caddy --> O3
+        Caddy --> A
     end
 
-    CF --> Caddy
-    Caddy --> L
-    Caddy --> M
-    Caddy --> MEM
-    Caddy --> O3
-    Caddy --> A
 
-    end
+
 
 Routing: Endpoints are fronted by Caddy and Cloudflare on bigtorig.com.
 
