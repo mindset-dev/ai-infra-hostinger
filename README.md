@@ -12,26 +12,36 @@ This repository is the **meta-layer** for the Hostinger-based AI Systems Lab.
 > **It does not duplicate the running Docker Compose stacks.**
 
 ## 🧩 System Map
+## 🧩 System Map
+
 ```mermaid
-graph LR
-    subgraph Hostinger[Hostinger Cloud]
-        Caddy[Caddy Reverse Proxy]:::edge -->|Cloudflare DNS| PublicInternet((Internet))
-        subgraph DockerProjects[Docker Compose Projects (-p)]
-            L[localai (23 services)\nFlowise, n8n, Neo4j, Qdrant, Supabase, Langfuse, Redis, OpenWebUI, MinIO, etc.]
-            M[maui (3 services)]
-            MEM[mem0 (1 service)]
-            O3[o3 (OpenMRS + DB + overrides)]
-            A[arcane (1 service)]
+graph TD
+    subgraph Hostinger["Hostinger Cloud"]
+        subgraph Caddy["Caddy Reverse Proxy"]
+            CF["↔ Cloudflare DNS"]
         end
-        subgraph KIND[KIND Cluster (3 nodes)]
-            CP[control-plane] --> W1[worker]
-            CP --> W2[worker2]
+
+        subgraph Docker_Compose_Projects["Docker Compose Projects (-p)"]
+            L["localai (23 services): Flowise, n8n, Neo4j, Qdrant, Supabase, Langfuse, Redis, OpenWebUI, MinIO"]
+            M["maui (3 services)"]
+            MEM["mem0 (1 service)"]
+            O3["o3 (OpenMRS + DB + overrides)"]
+            A["arcane (1 service)"]
         end
-        Caddy --> L
-        Caddy --> M
-        Caddy --> MEM
-        Caddy --> O3
-        Caddy --> A
+
+        subgraph KIND["KIND Cluster (3 nodes)"]
+            CP["control-plane"] --> W1["worker"]
+            CP --> W2["worker2"]
+        end
+    end
+
+    CF --> Caddy
+    Caddy --> L
+    Caddy --> M
+    Caddy --> MEM
+    Caddy --> O3
+    Caddy --> A
+
     end
     classDef edge stroke-width:2px;
 
